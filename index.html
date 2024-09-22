@@ -7,6 +7,7 @@
     <style>
         body {
             display: flex;
+            flex-direction: column; /* Dikey hizalama için */
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -21,20 +22,26 @@
             border: none; /* Kenarlık kaldırıldı */
             cursor: pointer; /* Fare işaretçisi */
         }
+        #result {
+            margin-top: 20px; /* Sonuç metninin üst kısmında boşluk */
+            font-size: 20px; /* Yazı boyutu */
+            color: black; /* Yazı rengi */
+        }
     </style>
 </head>
 <body>
 
-<button class="coin-button" onclick="earnCoins()"></button>
+<button class="coin-button" id="coin-button"></button>
+<div id="result">Coin sayın: 0</div> <!-- Coin sayısını göstermek için div -->
 
 <script>
     let coinCount = 0;
 
-        document.getElementById('coin-button').addEventListener('click', function() {
-            let coins = Math.floor(Math.random() * 10) + 1;
-            coinCount += coins;
-            document.getElementById('result').innerText = `Coin sayın: ${coinCount}`;
-        });
+    document.getElementById('coin-button').addEventListener('click', function() {
+        let coins = Math.floor(Math.random() * 10) + 1; // 1 ile 10 arasında rastgele coin
+        coinCount += coins; // Coin sayısını artır
+        document.getElementById('result').innerText = `Coin sayın: ${coinCount}`; // Sonucu güncelle
+    });
 </script>
 
 </body>
