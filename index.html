@@ -7,7 +7,7 @@
     <style>
         body {
             display: flex;
-            flex-direction: column; /* Dikey hizalama için */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -15,33 +15,55 @@
             background-color: pink;
         }
         .coin-button {
-            width: 150px; /* Buton genişliği */
-            height: 150px; /* Buton yüksekliği */
-            background: url('20221216_121931.jpg') no-repeat center center; /* Resim yolu */
-            background-size: cover; /* Resmin butona tam sığması için */
-            border: none; /* Kenarlık kaldırıldı */
-            cursor: pointer; /* Fare işaretçisi */
+            width: 150px;
+            height: 150px;
+            background: url('20221216_121931.jpg') no-repeat center center;
+            background-size: cover;
+            border: none;
+            cursor: pointer;
         }
         #result {
-            margin-top: 20px; /* Sonuç metninin üst kısmında boşluk */
-            font-size: 20px; /* Yazı boyutu */
-            color: black; /* Yazı rengi */
+            margin-top: 20px;
+            font-size: 20px;
+            color: black;
+        }
+        #hourly-earnings {
+            margin-top: 10px;
+            font-size: 18px;
+            color: green;
         }
     </style>
 </head>
 <body>
 
 <button class="coin-button" id="coin-button"></button>
-<div id="result">Coin sayın: 0</div> <!-- Coin sayısını göstermek için div -->
+<div id="result">Coin sayın: 0</div>
+<div id="hourly-earnings">Saatlik kazancın: 0</div>
 
 <script>
-    let coinCount = 0;
+    let coinCount = localStorage.getItem('coinCount') ? parseInt(localStorage.getItem('coinCount')) : 0;
+    let hourlyEarnings = 0;
 
+    // Coin sayısını başlangıçta göster
+    document.getElementById('result').innerText = `Coin sayın: ${coinCount}`;
+
+    // Butona tıklama olayını dinle
     document.getElementById('coin-button').addEventListener('click', function() {
-        let coins = Math.floor(Math.random() * 10) + 1; // 1 ile 10 arasında rastgele coin
-        coinCount += coins; // Coin sayısını artır
-        document.getElementById('result').innerText = `Coin sayın: ${coinCount}`; // Sonucu güncelle
+        let coins = Math.floor(Math.random() * 10) + 1;
+        coinCount += coins;
+        localStorage.setItem('coinCount', coinCount); // Coin sayısını localStorage'a kaydet
+        document.getElementById('result').innerText = `Coin sayın: ${coinCount}`;
     });
+
+    // Saatlik kazancı artır
+    setInterval(() => {
+        hourlyEarnings += 5; // Her saat başı 5 coin kazan
+        coinCount += 5; // Coin sayısını artır
+        localStorage.setItem('coinCount', coinCount); // Güncellenmiş coin sayısını kaydet
+        document.getElementById('result').innerText = `Coin sayın: ${coinCount}`;
+        document.getElementById('hourly-earnings').innerText = `Saatlik kazancın: ${hourlyEarnings}`; // Saatlik kazancı göster
+    }, 3600000); // 1 saat = 3600000 milisaniye
+
 </script>
 
 </body>
