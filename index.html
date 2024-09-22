@@ -28,10 +28,13 @@
 <button class="coin-button" onclick="earnCoins()"></button>
 
 <script>
-    function earnCoins() {
-        // Burada tıklama işlemi gerçekleştirilir
-        alert("Coin kazandınız!");
-    }
+    let coinCount = 0;
+
+        document.getElementById('coin-button').addEventListener('click', function() {
+            let coins = Math.floor(Math.random() * 10) + 1;
+            coinCount += coins;
+            document.getElementById('result').innerText = `Coin sayın: ${coinCount}`;
+        });
 </script>
 
 </body>
