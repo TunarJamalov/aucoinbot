@@ -32,17 +32,25 @@
             font-size: 18px;
             color: green;
         }
+        #daily-earnings-button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <button class="coin-button" id="coin-button"></button>
-<div id="result">Coin sayın: 0</div>
-<div id="hourly-earnings">Saatlik kazancın: 0</div>
+<div id="result">Coin miqdarı: 0</div>
+<div id="hourly-earnings">Saatlıq qazancın: 0</div>
+<button id="daily-earnings-button">Günlük coin</button>
 
 <script>
     let coinCount = localStorage.getItem('coinCount') ? parseInt(localStorage.getItem('coinCount')) : 0;
     let hourlyEarnings = 0;
+    let lastDailyClaim = localStorage.getItem('lastDailyClaim') ? new Date(localStorage.getItem('lastDailyClaim')) : null;
 
     // Coin sayısını başlangıçta göster
     document.getElementById('result').innerText = `Coin sayın: ${coinCount}`;
@@ -64,6 +72,28 @@
         document.getElementById('hourly-earnings').innerText = `Saatlik kazancın: ${hourlyEarnings}`; // Saatlik kazancı göster
     }, 3600000); // 1 saat = 3600000 milisaniye
 
+    // Günlük coin alma butonunu dinle
+    document.getElementById('daily-earnings-button').addEventListener('click', function() {
+        const now = new Date();
+        const timeDifference = now - lastDailyClaim;
+        
+        // Eğer son talep bir günden (86400000 ms) fazla ise
+        if (!lastDailyClaim || timeDifference > 86400000) {
+            const dailyCoins = 20; // Günlük verilecek coin miktarı
+            coinCount += dailyCoins; // Coin sayısını artır
+            localStorage.setItem('coinCount', coinCount); // Güncellenmiş coin sayısını kaydet
+            lastDailyClaim = now; // Son talep zamanını güncelle
+            localStorage.setItem('lastDailyClaim', now); // Zamanı localStorage'a kaydet
+
+            alert(`Günlük coin kazandınız: ${dailyCoins}!`); // Kullanıcıya mesaj
+        } else {
+            const remainingTime = 86400000 - timeDifference; // Kalan süreyi hesapla
+            const remainingHours = Math.ceil(remainingTime / 3600000); // Saat cinsine çevir
+            alert(`Günlük coin alabilmek için ${remainingHours} saat beklemelisiniz.`);
+        }
+
+        document.getElementById('result').innerText = `Coin miqdarı: ${coinCount}`; // Güncellenmiş coin sayısını göster
+    });
 </script>
 
 </body>
