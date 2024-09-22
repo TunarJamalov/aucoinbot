@@ -1,41 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coin Game</title>
+    <title>Coin Kazanma</title>
     <style>
         body {
-            text-align: center;
-            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
         }
-        #coin-button {
-            width: 200px;
-            height: 200px;
-            background-color: gold;
-            border-radius: 50%;
-            margin-top: 50px;
-            display: inline-block;
-            line-height: 200px;
-            font-size: 20px;
-            color: white;
-            cursor: pointer;
+        .coin-button {
+            width: 150px; /* Buton genişliği */
+            height: 150px; /* Buton yüksekliği */
+            background: url('path_to_your_image.png') no-repeat center center; /* Resim yolu */
+            background-size: cover; /* Resmin butona tam sığması için */
+            border: none; /* Kenarlık kaldırıldı */
+            cursor: pointer; /* Fare işaretçisi */
         }
     </style>
 </head>
 <body>
-    <h1>Coin Kazanma Oyunu</h1>
-    <div id="coin-button">Tıkla!</div>
-    <p id="result">Coin sayın: 0</p>
 
-    <script>
-        let coinCount = 0;
+<button class="coin-button" onclick="earnCoins()"></button>
 
-        document.getElementById('coin-button').addEventListener('click', function() {
-            let coins = Math.floor(Math.random() * 10) + 1;
-            coinCount += coins;
-            document.getElementById('result').innerText = `Coin sayın: ${coinCount}`;
-        });
-    </script>
+<script>
+    function earnCoins() {
+        // Burada tıklama işlemi gerçekleştirilir
+        alert("Coin kazandınız!");
+    }
+</script>
+
 </body>
 </html>
